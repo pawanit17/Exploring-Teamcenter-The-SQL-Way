@@ -1,0 +1,8 @@
+-- This is basically the SQL to get the object puid, object name and the site the object actually is owned.
+-- pPOM_Imc is the table that contains definitions about the other Teamcenter sites in a multi-site environment.
+
+select pomObject.puid as RemoteObject_Puid, wso.pObject_Name as RemoteObject_Name, pomIMC.PNAME as RemoteObject_OwningSite
+from infodba.pPOM_Object pomObject
+inner join infodba.pWorkspaceObject wso on wso.puid = pomObject.puid
+inner join infodba.pPOM_Imc pomIMC on pomObject.rOwning_siteU = pomIMC.puid
+where pomObject.rOwning_siteU IS NOT NULL;
